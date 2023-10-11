@@ -2,6 +2,7 @@ var express = require('express');
 var app = express();
 var routers = require("./Routers")
 var bodyParser = require('body-parser')
+const axios = require('axios');
 var ejs = require('ejs')
 const mongoose = require('mongoose')
 var Player = require('./views/schema');
@@ -39,27 +40,38 @@ app.get("/search", function(req,res){
 })
 
 app.post("/fetching", function(req,res){
-    console.log(req.body.Title)
-    console.log(req.body.Elo)
-    console.log(req.body.Country)
-    console.log(req.body.First_Name)
-    console.log(req.body.Last_Name)
+    console.log(req.body)
 
     try{
-    Player.find( {Title: req.body.Title,
-       },function(err, response){
-        if(err) {
-           console.log(err);
-        }
-        else
-           console.log(response)
-     });
+        Player.find({ Last_Name: req.body.Last_Name }, function (err, response) {
+            if (err) {
+              console.log(err);
+              // Handle the error, e.g., send an error response
+              res.status(500).send('An error occurred');
+            } else {
+              if (response.length > 0) {
+                const player = {
+                  Title: response[0].Title,
+                  Elo: response[0].Elo,
+                  Country: response[0].Country,
+                  First_Name: response[0].First_Name,
+                  Last_Name: response[0].Last_Name,
+                };
+                res.render('display', { player });
+              } else {
+                // Handle the case where no matching record was found
+                console.log("Player not found")
+                res.redirect("/")
+
+              }
+            }
+          });
     } catch{
 
     }
 })
 
-app.post("/bymnguynzon", function(req,res){
+app.post("/submission", function(req,res){
     console.log(req.body.Title)
     console.log(req.body.Elo)
     console.log(req.body.Country)
@@ -75,32 +87,17 @@ app.post("/bymnguynzon", function(req,res){
     try{
     player.save(function(err, Player){
         if(err) {
-           console.log(err);
-           res.send(player);
+            console.log(err);
+            res.send(player);
         }
         else
-           res.send(Player);
+            res.redirect("/");
      });
     } catch{
-
+        console.log("Couldn't save to database");
     }
+    
 })
 
-
-
-app.use("/things",function(req,res,next){
-    console.log("lmao")
-    next()
-})
-
-app.get("/things",function(req,res,next){
-    console.log("uh huh")
-    res.send("construct")
-    next()
-})
-app.use("/things",function(req,res,next){
-    console.log("something is off")
-    next()
-})
 
 app.listen(8500);
