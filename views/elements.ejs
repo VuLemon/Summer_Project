@@ -9,31 +9,37 @@
     crossorigin="anonymous">
 </head>
 <body>
-    <h1 class="text-center"> Database for chess players (That I currently know of)</h1>
-    <p class ="text-center"> I'll try to update this as it goes.</p>
+    <div style="background-color: cornflowerblue">
+        <h1 class="text-center" style="color: white;"> FIDE's Top 50 Chess players</h1>
+        <p class ="text-center" style="color: white;"> (Last updated: October 13th, 2023)</p>
+    </div>
     <div class = "d-flex flex-row">
         <div class="card" style="width: 45rem;">
             <div class = "card-body">
-                <img src="images/hand.png" class="card-img-top" alt="chess-playing-hand">
+                <img src="https://assetsio.reedpopcdn.com/chess-playing-hand.jpeg?width=848&quality=80&format=jpg&dpr=2&auto=webp" class="card-img-top" height="400" alt="chess-playing-hand">
                 <h3 class = "card-title"> Add a chess player</h5>
                 <p class = "card-text"> The database is constantly getting updated. Add your favorite GMs and super GMs here</p>
                 <form action="chess" method="get">
-                    <button class = "btn btn-primary" type="submit">
-                        Add
-                    </button>
+                    <div class = "text-center">
+                        <button class = "btn btn-lg btn-primary" type="submit" class="text-center">
+                            Add
+                        </button>
+                    </div>
                 </form>
             </div>
         </div>
 
         <div class = "card" style = "width: 45rem;">
             <div class = "card-body">
-                <img src="images/champ.jpeg" class="card-img-top" alt="carlsen-playing">
+                <img src="https://cdn.chess24.com/3rICM8YvTv-7DoX6fxxPWA/original/51742474648_86c1d847e2_c--1.jpg" class="card-img-top" width="100" height="400" alt="carlsen-playing">
                 <h3 class = "card-title"> Find a chess player</h5>
                 <p class = "card-text"> Put the name of your chess players here, and see all of their stats</p>
                 <form action="search" method="get">
-                    <button class = "btn btn-primary" type="submit">
-                        Search
-                    </button>
+                    <div class = "text-center">
+                        <button class = "btn btn-lg btn-primary" type="submit" class="text-center">
+                            Search
+                        </button>
+                    </div>
                 </form>
             </div>
         </div>
