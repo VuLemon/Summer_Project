@@ -1,4 +1,6 @@
 var express = require('express');
+const fs = require('fs')
+const https = require('https')
 var app = express();
 var routers = require("./Routers")
 var bodyParser = require('body-parser')
@@ -99,5 +101,24 @@ app.post("/submission", function(req,res){
     
 })
 
+app.use((req, res, next) => {
+  if (req.protocol === 'http') {
+    const httpsUrl = `https://${req.headers.host}${req.url}`;
+    return res.redirect(301, httpsUrl);
+  }
+  next();
+});
 
-app.listen(80);
+
+
+https
+  .createServer(
+    {
+      key: fs.readFileSync('chessdata.online/privkey.pem'),
+      cert: fs.readFileSync('chessdata.online/fullchain.pem'),
+    },
+    app
+  )
+  .listen(443, () => {
+    console.log('Listening on HTTPS')
+  })
