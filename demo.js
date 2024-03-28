@@ -98,7 +98,7 @@ app.post("/submission", function(req,res){
     } catch{
         console.log("Couldn't save to database");
     }
-    
+     
 })
 
 app.use((req, res, next) => {
